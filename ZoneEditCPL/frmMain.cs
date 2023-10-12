@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ZoneEditCPL
 {
@@ -167,14 +168,14 @@ namespace ZoneEditCPL
             // 
             // statusBar1
             // 
-            this.statusBar1.Location = new System.Drawing.Point(0, 319);
+            this.statusBar1.Location = new System.Drawing.Point(0, 328);
             this.statusBar1.Name = "statusBar1";
             this.statusBar1.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
             this.statusBarPanel1,
             this.statusBarPanelNextCheck,
             this.SvcStatus});
             this.statusBar1.ShowPanels = true;
-            this.statusBar1.Size = new System.Drawing.Size(773, 30);
+            this.statusBar1.Size = new System.Drawing.Size(773, 21);
             this.statusBar1.TabIndex = 17;
             this.statusBar1.Text = "statusBar1";
             // 
@@ -183,7 +184,7 @@ namespace ZoneEditCPL
             this.statusBarPanel1.AutoSize = System.Windows.Forms.StatusBarPanelAutoSize.Spring;
             this.statusBarPanel1.Name = "statusBarPanel1";
             this.statusBarPanel1.Text = "Ready...";
-            this.statusBarPanel1.Width = 528;
+            this.statusBarPanel1.Width = 532;
             // 
             // statusBarPanelNextCheck
             // 
@@ -209,7 +210,7 @@ namespace ZoneEditCPL
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(773, 319);
+            this.tabControl1.Size = new System.Drawing.Size(773, 328);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 20;
             // 
@@ -219,35 +220,35 @@ namespace ZoneEditCPL
             this.tabPageOptions.Controls.Add(this.cmdCancel);
             this.tabPageOptions.Controls.Add(this.cmdSave);
             this.tabPageOptions.Controls.Add(this.groupBox1);
-            this.tabPageOptions.Location = new System.Drawing.Point(4, 29);
+            this.tabPageOptions.Location = new System.Drawing.Point(4, 22);
             this.tabPageOptions.Name = "tabPageOptions";
-            this.tabPageOptions.Size = new System.Drawing.Size(765, 286);
+            this.tabPageOptions.Size = new System.Drawing.Size(765, 302);
             this.tabPageOptions.TabIndex = 0;
             this.tabPageOptions.Text = "Options";
             // 
             // cmdConfigure
             // 
-            this.cmdConfigure.Location = new System.Drawing.Point(472, 294);
+            this.cmdConfigure.Location = new System.Drawing.Point(295, 201);
             this.cmdConfigure.Name = "cmdConfigure";
-            this.cmdConfigure.Size = new System.Drawing.Size(136, 34);
+            this.cmdConfigure.Size = new System.Drawing.Size(85, 23);
             this.cmdConfigure.TabIndex = 22;
             this.cmdConfigure.Text = "Update";
             this.cmdConfigure.Click += new System.EventHandler(this.cmdConfigure_Click);
             // 
             // cmdCancel
             // 
-            this.cmdCancel.Location = new System.Drawing.Point(275, 294);
+            this.cmdCancel.Location = new System.Drawing.Point(172, 201);
             this.cmdCancel.Name = "cmdCancel";
-            this.cmdCancel.Size = new System.Drawing.Size(136, 34);
+            this.cmdCancel.Size = new System.Drawing.Size(85, 23);
             this.cmdCancel.TabIndex = 21;
             this.cmdCancel.Text = "Close";
             this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
             // 
             // cmdSave
             // 
-            this.cmdSave.Location = new System.Drawing.Point(77, 294);
+            this.cmdSave.Location = new System.Drawing.Point(48, 201);
             this.cmdSave.Name = "cmdSave";
-            this.cmdSave.Size = new System.Drawing.Size(136, 34);
+            this.cmdSave.Size = new System.Drawing.Size(85, 23);
             this.cmdSave.TabIndex = 20;
             this.cmdSave.Text = "Save";
             this.cmdSave.Click += new System.EventHandler(this.cmdSave_Click);
@@ -267,9 +268,9 @@ namespace ZoneEditCPL
             this.groupBox1.Controls.Add(this.txtPassword);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtUserName);
-            this.groupBox1.Location = new System.Drawing.Point(5, 8);
+            this.groupBox1.Location = new System.Drawing.Point(3, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(750, 281);
+            this.groupBox1.Size = new System.Drawing.Size(469, 193);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Zone Edit Info";
@@ -278,109 +279,109 @@ namespace ZoneEditCPL
             // 
             this.ckLog.Checked = true;
             this.ckLog.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckLog.Location = new System.Drawing.Point(555, 213);
+            this.ckLog.Location = new System.Drawing.Point(347, 146);
             this.ckLog.Name = "ckLog";
-            this.ckLog.Size = new System.Drawing.Size(181, 30);
+            this.ckLog.Size = new System.Drawing.Size(113, 20);
             this.ckLog.TabIndex = 46;
             this.ckLog.Text = "Log Events";
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(13, 213);
+            this.label6.Location = new System.Drawing.Point(8, 146);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(174, 30);
+            this.label6.Size = new System.Drawing.Size(109, 20);
             this.label6.TabIndex = 43;
             this.label6.Text = "Check IP Interval:";
             // 
             // txtIPInterval
             // 
-            this.txtIPInterval.Location = new System.Drawing.Point(213, 213);
+            this.txtIPInterval.Location = new System.Drawing.Point(133, 146);
             this.txtIPInterval.Name = "txtIPInterval";
-            this.txtIPInterval.Size = new System.Drawing.Size(56, 26);
+            this.txtIPInterval.Size = new System.Drawing.Size(35, 20);
             this.txtIPInterval.TabIndex = 42;
             this.txtIPInterval.Text = "5";
             this.txtIPInterval.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(13, 177);
+            this.label5.Location = new System.Drawing.Point(8, 121);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(147, 29);
+            this.label5.Size = new System.Drawing.Size(92, 20);
             this.label5.TabIndex = 41;
             this.label5.Text = "Zones";
             // 
             // txtZones
             // 
-            this.txtZones.Location = new System.Drawing.Point(213, 177);
+            this.txtZones.Location = new System.Drawing.Point(133, 121);
             this.txtZones.Name = "txtZones";
-            this.txtZones.Size = new System.Drawing.Size(523, 26);
+            this.txtZones.Size = new System.Drawing.Size(327, 20);
             this.txtZones.TabIndex = 40;
             this.txtZones.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(13, 142);
+            this.label4.Location = new System.Drawing.Point(8, 97);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(147, 29);
+            this.label4.Size = new System.Drawing.Size(92, 20);
             this.label4.TabIndex = 39;
             this.label4.Text = "Update URL:";
             // 
             // txtUpdateURL
             // 
-            this.txtUpdateURL.Location = new System.Drawing.Point(213, 142);
+            this.txtUpdateURL.Location = new System.Drawing.Point(133, 97);
             this.txtUpdateURL.Name = "txtUpdateURL";
-            this.txtUpdateURL.Size = new System.Drawing.Size(523, 26);
+            this.txtUpdateURL.Size = new System.Drawing.Size(327, 20);
             this.txtUpdateURL.TabIndex = 38;
             this.txtUpdateURL.Text = "https://dynamic.zoneedit.com/auth/dynamic.html";
             this.txtUpdateURL.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(13, 106);
+            this.label3.Location = new System.Drawing.Point(8, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(147, 30);
+            this.label3.Size = new System.Drawing.Size(92, 20);
             this.label3.TabIndex = 37;
             this.label3.Text = "Check IP URL:";
             // 
             // txtCheckURL
             // 
-            this.txtCheckURL.Location = new System.Drawing.Point(213, 106);
+            this.txtCheckURL.Location = new System.Drawing.Point(133, 73);
             this.txtCheckURL.Name = "txtCheckURL";
-            this.txtCheckURL.Size = new System.Drawing.Size(523, 26);
+            this.txtCheckURL.Size = new System.Drawing.Size(327, 20);
             this.txtCheckURL.TabIndex = 36;
             this.txtCheckURL.Text = "http://www.netapps.net/ip/default.aspx";
             this.txtCheckURL.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(13, 68);
+            this.label2.Location = new System.Drawing.Point(8, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(147, 30);
+            this.label2.Size = new System.Drawing.Size(92, 20);
             this.label2.TabIndex = 35;
             this.label2.Text = "Password:";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(213, 68);
+            this.txtPassword.Location = new System.Drawing.Point(133, 47);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(523, 26);
+            this.txtPassword.Size = new System.Drawing.Size(327, 20);
             this.txtPassword.TabIndex = 34;
             this.txtPassword.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(13, 34);
+            this.label1.Location = new System.Drawing.Point(8, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(147, 27);
+            this.label1.Size = new System.Drawing.Size(92, 19);
             this.label1.TabIndex = 33;
             this.label1.Text = "User Name:";
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(213, 34);
+            this.txtUserName.Location = new System.Drawing.Point(133, 23);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(523, 26);
+            this.txtUserName.Size = new System.Drawing.Size(327, 20);
             this.txtUserName.TabIndex = 32;
             this.txtUserName.Enter += new System.EventHandler(this.TextBox_ShowHelp);
             // 
@@ -388,9 +389,9 @@ namespace ZoneEditCPL
             // 
             this.tabPageLog.Controls.Add(this.lvLog);
             this.tabPageLog.Controls.Add(this.panel1);
-            this.tabPageLog.Location = new System.Drawing.Point(4, 29);
+            this.tabPageLog.Location = new System.Drawing.Point(4, 22);
             this.tabPageLog.Name = "tabPageLog";
-            this.tabPageLog.Size = new System.Drawing.Size(781, 379);
+            this.tabPageLog.Size = new System.Drawing.Size(475, 192);
             this.tabPageLog.TabIndex = 1;
             this.tabPageLog.Text = "Log";
             // 
@@ -402,9 +403,10 @@ namespace ZoneEditCPL
             this.columnHeader3});
             this.lvLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvLog.FullRowSelect = true;
+            this.lvLog.HideSelection = false;
             this.lvLog.Location = new System.Drawing.Point(0, 0);
             this.lvLog.Name = "lvLog";
-            this.lvLog.Size = new System.Drawing.Size(781, 316);
+            this.lvLog.Size = new System.Drawing.Size(475, 149);
             this.lvLog.TabIndex = 2;
             this.lvLog.UseCompatibleStateImageBehavior = false;
             this.lvLog.View = System.Windows.Forms.View.Details;
@@ -431,18 +433,18 @@ namespace ZoneEditCPL
             this.panel1.Controls.Add(this.btnReloadEvents);
             this.panel1.Controls.Add(this.lblLogMessage);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 316);
+            this.panel1.Location = new System.Drawing.Point(0, 149);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(781, 63);
+            this.panel1.Size = new System.Drawing.Size(475, 43);
             this.panel1.TabIndex = 1;
             // 
             // btnReloadEvents
             // 
             this.btnReloadEvents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReloadEvents.Location = new System.Drawing.Point(681, 10);
+            this.btnReloadEvents.Location = new System.Drawing.Point(413, 7);
             this.btnReloadEvents.Name = "btnReloadEvents";
-            this.btnReloadEvents.Size = new System.Drawing.Size(100, 43);
+            this.btnReloadEvents.Size = new System.Drawing.Size(62, 29);
             this.btnReloadEvents.TabIndex = 1;
             this.btnReloadEvents.Text = "Reload";
             this.btnReloadEvents.UseVisualStyleBackColor = true;
@@ -453,7 +455,7 @@ namespace ZoneEditCPL
             this.lblLogMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblLogMessage.Location = new System.Drawing.Point(0, 0);
             this.lblLogMessage.Name = "lblLogMessage";
-            this.lblLogMessage.Size = new System.Drawing.Size(781, 63);
+            this.lblLogMessage.Size = new System.Drawing.Size(475, 43);
             this.lblLogMessage.TabIndex = 0;
             // 
             // tabPageService
@@ -461,9 +463,9 @@ namespace ZoneEditCPL
             this.tabPageService.Controls.Add(this.txtConsoleOut);
             this.tabPageService.Controls.Add(this.cmdInstallSvc);
             this.tabPageService.Controls.Add(this.cmdServiceController);
-            this.tabPageService.Location = new System.Drawing.Point(4, 29);
+            this.tabPageService.Location = new System.Drawing.Point(4, 22);
             this.tabPageService.Name = "tabPageService";
-            this.tabPageService.Size = new System.Drawing.Size(781, 379);
+            this.tabPageService.Size = new System.Drawing.Size(475, 192);
             this.tabPageService.TabIndex = 2;
             this.tabPageService.Text = "Service";
             // 
@@ -477,24 +479,24 @@ namespace ZoneEditCPL
             this.txtConsoleOut.Multiline = true;
             this.txtConsoleOut.Name = "txtConsoleOut";
             this.txtConsoleOut.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtConsoleOut.Size = new System.Drawing.Size(781, 379);
+            this.txtConsoleOut.Size = new System.Drawing.Size(475, 192);
             this.txtConsoleOut.TabIndex = 2;
             this.txtConsoleOut.Visible = false;
             // 
             // cmdInstallSvc
             // 
-            this.cmdInstallSvc.Location = new System.Drawing.Point(24, 18);
+            this.cmdInstallSvc.Location = new System.Drawing.Point(15, 12);
             this.cmdInstallSvc.Name = "cmdInstallSvc";
-            this.cmdInstallSvc.Size = new System.Drawing.Size(285, 29);
+            this.cmdInstallSvc.Size = new System.Drawing.Size(178, 20);
             this.cmdInstallSvc.TabIndex = 1;
             this.cmdInstallSvc.Text = "Install Service";
             this.cmdInstallSvc.Click += new System.EventHandler(this.cmdInstallSvc_Click);
             // 
             // cmdServiceController
             // 
-            this.cmdServiceController.Location = new System.Drawing.Point(24, 63);
+            this.cmdServiceController.Location = new System.Drawing.Point(15, 43);
             this.cmdServiceController.Name = "cmdServiceController";
-            this.cmdServiceController.Size = new System.Drawing.Size(285, 29);
+            this.cmdServiceController.Size = new System.Drawing.Size(178, 20);
             this.cmdServiceController.TabIndex = 0;
             this.cmdServiceController.Click += new System.EventHandler(this.cmdServiceController_Click);
             // 
@@ -503,35 +505,35 @@ namespace ZoneEditCPL
             this.tabPageManualUpdate.Controls.Add(this.cmdUpdateManual);
             this.tabPageManualUpdate.Controls.Add(this.label9);
             this.tabPageManualUpdate.Controls.Add(this.txtManualIP);
-            this.tabPageManualUpdate.Location = new System.Drawing.Point(4, 29);
+            this.tabPageManualUpdate.Location = new System.Drawing.Point(4, 22);
             this.tabPageManualUpdate.Name = "tabPageManualUpdate";
-            this.tabPageManualUpdate.Size = new System.Drawing.Size(781, 379);
+            this.tabPageManualUpdate.Size = new System.Drawing.Size(475, 192);
             this.tabPageManualUpdate.TabIndex = 3;
             this.tabPageManualUpdate.Text = "Manual";
             this.tabPageManualUpdate.ToolTipText = "Update to Specified IP Address";
             // 
             // cmdUpdateManual
             // 
-            this.cmdUpdateManual.Location = new System.Drawing.Point(419, 20);
+            this.cmdUpdateManual.Location = new System.Drawing.Point(262, 14);
             this.cmdUpdateManual.Name = "cmdUpdateManual";
-            this.cmdUpdateManual.Size = new System.Drawing.Size(154, 29);
+            this.cmdUpdateManual.Size = new System.Drawing.Size(96, 20);
             this.cmdUpdateManual.TabIndex = 40;
             this.cmdUpdateManual.Text = "Update";
             this.cmdUpdateManual.Click += new System.EventHandler(this.cmdUpdateManual_Click);
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(13, 18);
+            this.label9.Location = new System.Drawing.Point(8, 12);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(147, 29);
+            this.label9.Size = new System.Drawing.Size(92, 20);
             this.label9.TabIndex = 39;
             this.label9.Text = "IP Address:";
             // 
             // txtManualIP
             // 
-            this.txtManualIP.Location = new System.Drawing.Point(165, 18);
+            this.txtManualIP.Location = new System.Drawing.Point(103, 12);
             this.txtManualIP.Name = "txtManualIP";
-            this.txtManualIP.Size = new System.Drawing.Size(222, 26);
+            this.txtManualIP.Size = new System.Drawing.Size(139, 20);
             this.txtManualIP.TabIndex = 38;
             // 
             // ZoneEditServiceController
@@ -553,7 +555,7 @@ namespace ZoneEditCPL
             // 
             // frmMain
             // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(8, 19);
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(773, 349);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusBar1);
@@ -627,12 +629,13 @@ namespace ZoneEditCPL
 			//update the class
 			this.m_Config.DDNS_IPPage = this.txtCheckURL.Text;
 			this.m_Config.DDNS_Password = this.txtPassword.Text;
-			this.m_Config.DDNS_URL = string.Concat(this.txtUpdateURL.Text,"?host=",txtZones.Text);
+			this.m_Config.DDNS_URL = this.txtUpdateURL.Text;
 			this.m_Config.DDNS_UserName = this.txtUserName.Text;
+            this.m_Config.DDNS_Zones = this.txtZones.Text;
 			this.m_Config.Debug = this.ckLog.Checked.ToString();
 			this.m_Config.IP_Check_Interval = (Convert.ToInt32(this.txtIPInterval.Text)).ToString();
             m_Config.LastIPAddress = txtManualIP.Text;
-			this.m_Config.Save();
+			this.m_Config.SaveToRegistry();
 
 		
 		}
@@ -645,7 +648,7 @@ namespace ZoneEditCPL
                 this.txtUpdateURL.Text = m_Config.DDNS_URL.Substring(0, m_Config.DDNS_URL.IndexOf("?host"));
             else
                 this.txtUpdateURL.Text = m_Config.DDNS_URL;
-			this.txtZones.Text = m_Config.DDNS_URL.Substring(m_Config.DDNS_URL.IndexOf("?host")+6);
+			this.txtZones.Text = m_Config.DDNS_Zones;
 			this.txtUserName.Text = m_Config.DDNS_UserName;
 			this.ckLog.Checked = bool.Parse(m_Config.Debug);
 			this.txtIPInterval.Text = (int.Parse(m_Config.IP_Check_Interval)).ToString();
@@ -654,7 +657,7 @@ namespace ZoneEditCPL
 
         string _currentIP = string.Empty;
 
-		private void frmMain_Load(object sender, System.EventArgs e)
+		private async void frmMain_Load(object sender, System.EventArgs e)
 		{
             //make sure this is registered
             m_AppPath = new FileInfo(Application.ExecutablePath).DirectoryName;
@@ -667,8 +670,8 @@ namespace ZoneEditCPL
 
                 ShowHelp("Loading Config...");
 
-                LoadLogFile();
-                m_Config = new Config();
+                await LoadLogFileAsync();
+               // m_Config = new Config();
                 LoadFormFromConfig();
                 ShowHelp("Ready...");
                 txtManualIP.Text = ZoneEdit.ZoneLib.GetIP(m_Config);
@@ -682,33 +685,27 @@ namespace ZoneEditCPL
 
 		}
 
-		private void ZoneEditLogWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
-		{
-			LoadLogFile();
-		}
-
-		private void ZoneEditLogWatcher_Changed(object sender, System.IO.FileSystemEventArgs e)
-		{
-			LoadLogFile();		
-		}
-
-		private void LoadLogFile()
+		private async Task LoadLogFileAsync()
 		{
             lvLog.Items.Clear();
-            _LogEvents = ZoneEdit.ZoneLib.LoadEvents();
-            LoadLogList();
+            _LogEvents = await ZoneEdit.ZoneLib.LoadEventsAsync();
+            await LoadLogListAsync();
 
 		}
 
-        private void LoadLogList()
+        private async Task LoadLogListAsync()
         {
-            for (int i = 0; i < _LogEvents.Count; i++)
+
+            await Task.Run(() =>
             {
-                ListViewItem item = new ListViewItem(_LogEvents[i].EntryTime.ToString());
-                item.SubItems.Add(_LogEvents[i].LogType.ToString());
-                item.SubItems.Add(_LogEvents[i].Message);
-                lvLog.Items.Add(item);
-            }
+                for (int i = 0; i < _LogEvents.Count; i++)
+                {
+                    ListViewItem item = new ListViewItem(_LogEvents[i].EntryTime.ToString());
+                    item.SubItems.Add(_LogEvents[i].LogType.ToString());
+                    item.SubItems.Add(_LogEvents[i].Message);
+                    lvLog.Items.Add(item);
+                }
+            });
 
         }
 
@@ -901,10 +898,10 @@ namespace ZoneEditCPL
             }
         }
 
-        private void lvLog_ColumnClick(object sender, ColumnClickEventArgs e)
+        private async void lvLog_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             _LogEvents.Reverse();
-            LoadLogList();
+            await LoadLogListAsync();
         }
 
 
@@ -927,9 +924,9 @@ namespace ZoneEditCPL
             Application.Exit();
         }
 
-        private void btnReloadEvents_Click(object sender, EventArgs e)
+        private async void btnReloadEvents_Click(object sender, EventArgs e)
         {
-            LoadLogFile();
+            await LoadLogFileAsync();
         }
 	}
 }

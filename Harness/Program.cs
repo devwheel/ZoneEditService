@@ -13,10 +13,8 @@ namespace Harness
         {
            
 
-            ZoneEdit.Config config = new Config();
+            ZoneEdit.Config config = new ZoneEdit.Config();
             ZoneEdit.ZoneLib.ConfigureDNS(config, false);
-            
-            var t = 1;
 
         }
     }

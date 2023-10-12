@@ -8,7 +8,7 @@ using System.Configuration;
 using Microsoft.Win32;
 using System.Resources;
 using System.Reflection;
-
+using System.Threading.Tasks;
 
 namespace ZoneEdit
 {
@@ -62,23 +62,29 @@ namespace ZoneEdit
         {
             try
             {
-                //pull values from configuration file
-                string ddnsUrl = string.Concat(url,"?host=",zone);//, string.Format("&dnsto={0}", IPAddress));
-                string ddnsUserName = cfg.DDNS_UserName;
-                string ddnsPassword = cfg.DDNS_Password;
-
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ddnsUrl);
-                request.Credentials = new NetworkCredential(ddnsUserName, ddnsPassword);
-
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == (HttpStatusCode)201)
+                var zones = zone.Split(',');
+                foreach (var trackedZone in zones)
                 {
-                    WriteToLog("DNS provider successfully updated", EventLogEntryType.Information);
-                }
-                else
-                {
-                    string errMsg = Convert(response.GetResponseStream());
-                    WriteToLog(string.Format("Failed to update www.zoneedit.com. Recieved return code {0} and message \"{1}\"", response.StatusCode, errMsg), EventLogEntryType.Information);
+
+                    //pull values from configuration file
+                    string ddnsUrl = string.Concat(url, "?host=", trackedZone.Trim());//, string.Format("&dnsto={0}", IPAddress));
+                    string ddnsUserName = cfg.DDNS_UserName;
+                    string ddnsPassword = cfg.DDNS_Password;
+
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ddnsUrl);
+                    request.Credentials = new NetworkCredential(ddnsUserName, ddnsPassword);
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    string responseMsg = Convert(response.GetResponseStream());
+                    if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == (HttpStatusCode)201)
+                    {
+                        WriteToLog($"DNS provider successfully updated {trackedZone.Trim()}", EventLogEntryType.Information);
+                    }
+                    else
+                    {
+
+                        WriteToLog($"Failed to update {trackedZone.Trim()} at www.zoneedit.com. Recieved return code {response.StatusCode} and message \"{responseMsg}\"", EventLogEntryType.Information);
+                    }
                 }
             }
             catch (Exception ex)
@@ -148,9 +154,9 @@ namespace ZoneEdit
 
 					/* Step 5. Save new IP to our IP file
 					 */
-                    WriteToLog(string.Format("Saving ip {0} to file ZoneEdit_IP.txt", currentIP), EventLogEntryType.Information);
+                    WriteToLog(string.Format("Saving ip {0} to registry", currentIP), EventLogEntryType.Information);
 					SaveCurrentIP(currentIP);
-                    WriteToLog("IP saved to file", EventLogEntryType.Information);
+                    WriteToLog("IP saved to registry", EventLogEntryType.Information);
 				}
 				else
 				{
@@ -267,22 +273,26 @@ namespace ZoneEdit
             }
            
 		}
-        public static List<CustomEvents> LoadEvents()
+        public async static Task<List<CustomEvents>> LoadEventsAsync()
         {
-            List<CustomEvents> events = new List<CustomEvents>();
-            EventLog myLog = new EventLog();
-            myLog.Log = "ZoneEdit";
-            foreach (EventLogEntry entry in myLog.Entries)
+            return  await Task.Factory.StartNew(() =>
             {
-                CustomEvents ce = new CustomEvents();
-                ce.EntryTime = entry.TimeWritten;
-                ce.Message = entry.Message;
-                ce.LogType = entry.EntryType;
-                events.Add(ce);
-            }
 
-            events.Reverse();
-            return events;
+                List<CustomEvents> events = new List<CustomEvents>();
+                EventLog myLog = new EventLog();
+                myLog.Log = "ZoneEdit";
+                foreach (EventLogEntry entry in myLog.Entries)
+                {
+                    CustomEvents ce = new CustomEvents();
+                    ce.EntryTime = entry.TimeWritten;
+                    ce.Message = entry.Message;
+                    ce.LogType = entry.EntryType;
+                    events.Add(ce);
+                }
+
+                events.Reverse();
+                return events;
+            });
         }
         public static string GetIP(Config cfg)
         {

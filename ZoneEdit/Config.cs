@@ -19,86 +19,54 @@ namespace ZoneEdit
 
 		#region Constants
 		private const string CONFIG_FILE = "ZoneEditSvc.config";
-		private const string LOG_FILE		= "ZoneEditSvc.log";
-		private const string IP_FILE		= "ZoneEdit_IP.txt";
+		private string _AppId = string.Empty;
 		#endregion
 
-		private String _dDNS_UserName = string.Empty; 
-		private String _dDNS_Password = string.Empty; 
-		private String _dDNS_IPPage = "http://www.netapps.net/ip/default.aspx"; 
-		private String _dDNS_URL = "https://dynamic.zoneedit.com/auth/dynamic.html"; 
-		private String _iP_Check_Interval = "5"; 
-		private String _debug = "True";
-        private string _AppId = string.Empty;
+
         private RegistryKey _Registry = null;
-        private string _LastIPAddress = "10.10.10.10";
 
 		#region Debug Property
-		public String Debug
-		{
-			get { return _debug; }
-			set { _debug = value; }
-		}
+		public String Debug { get; set; } = "True";
 		#endregion
 
 		#region DDNS_URL Property
 		[System.ComponentModel.Category("")]
 		[System.ComponentModel.Description("")]
 		[Bindable(true)]
-		public String DDNS_URL
-		{
-			get { return _dDNS_URL; }
-			set { _dDNS_URL = value; }
-		}
+		public String DDNS_URL { get; set; } = "https://dynamic.zoneedit.com/auth/dynamic.html";
 		#endregion
 
 		#region DDNS_UserName Property
 		[System.ComponentModel.Category("")]
 		[System.ComponentModel.Description("")]
 		[Bindable(true)]
-		public String DDNS_UserName
-		{
-			get { return _dDNS_UserName; }
-			set { _dDNS_UserName = value; }
-		}
+		public String DDNS_UserName { get; set; } = string.Empty;
 		#endregion
 
 		#region DDNS_Password Property
 		[System.ComponentModel.Category("")]
 		[System.ComponentModel.Description("")]
 		[Bindable(true)]
-		public String DDNS_Password
-		{
-			get { return _dDNS_Password; }
-			set { _dDNS_Password = value; }
-		}
+		public String DDNS_Password { get; set; } = string.Empty;
 		#endregion
 
 		#region IP_Check_Interval Property
 		[System.ComponentModel.Category("")]
 		[System.ComponentModel.Description("")]
 		[Bindable(true)]
-		public String IP_Check_Interval
-		{
-			get { return _iP_Check_Interval; }
-			set { _iP_Check_Interval = value; }
-		}
+		public String IP_Check_Interval { get; set; } = "5";
 		#endregion
 
 		#region DDNS_IPPage Property
-		public String DDNS_IPPage
-		{
-			get { return _dDNS_IPPage; }
-			set { _dDNS_IPPage = value; }
-		}
+		public String DDNS_IPPage { get; set; } = "http://www.netapps.net/ip/default.aspx";
 		#endregion
 
-        #region LastIPAddress
-        public string LastIPAddress
-        {
-            get { return _LastIPAddress; }
-            set { _LastIPAddress = value; }
-        }
+		#region DDNS_ZONES
+		public string DDNS_Zones { get; set; } = string.Empty;
+		#endregion
+
+		#region LastIPAddress
+		public string LastIPAddress { get; set; } = "10.10.10.10";
         #endregion
 
 
@@ -109,27 +77,31 @@ namespace ZoneEdit
             _AppId = mgr.GetString("AppGuid");
             _Registry = Registry.ClassesRoot.CreateSubKey("CLSID\\" + _AppId);
 
-            this.DDNS_IPPage = _Registry.GetValue("IpPage", _dDNS_IPPage).ToString();
-            this.DDNS_Password = _Registry.GetValue("Password", _dDNS_Password).ToString();
-            this.DDNS_URL = _Registry.GetValue("PostUrl", _dDNS_URL).ToString();
-            this.DDNS_UserName = _Registry.GetValue("UserName", _dDNS_UserName).ToString();
+            this.DDNS_IPPage = _Registry.GetValue("IpPage", DDNS_IPPage).ToString();
+            this.DDNS_Password = _Registry.GetValue("Password", DDNS_Password).ToString();
+            this.DDNS_URL = _Registry.GetValue("PostUrl", DDNS_URL).ToString();
+            this.DDNS_UserName = _Registry.GetValue("UserName", DDNS_UserName).ToString();
             this.Debug = _Registry.GetValue("Debug", "True").ToString();
-            this.IP_Check_Interval = _Registry.GetValue("Interval", _iP_Check_Interval).ToString();
-            this.LastIPAddress = _Registry.GetValue("LastIpAddress", _LastIPAddress).ToString();
+            this.IP_Check_Interval = _Registry.GetValue("Interval", IP_Check_Interval).ToString();
+            this.LastIPAddress = _Registry.GetValue("LastIpAddress", LastIPAddress).ToString();
+			this.DDNS_Zones = _Registry.GetValue("Zones",DDNS_Zones).ToString();
             
 		}
-		#endregion
+        #endregion
 
-		public void Save()
+        #region Save to Registry
+        public void SaveToRegistry()
 		{
-            _Registry.SetValue("IpPage", _dDNS_IPPage);
-            _Registry.SetValue("Password", _dDNS_Password);
-            _Registry.SetValue("PostUrl", _dDNS_URL);
-            _Registry.SetValue("UserName", _dDNS_UserName);
+            _Registry.SetValue("IpPage", DDNS_IPPage);
+            _Registry.SetValue("Password", DDNS_Password);
+            _Registry.SetValue("PostUrl", DDNS_URL);
+            _Registry.SetValue("UserName", DDNS_UserName);
             _Registry.SetValue("Debug", "True");
-            _Registry.SetValue("Interval", _iP_Check_Interval);
-            _Registry.SetValue("LastIpAddress", _LastIPAddress);
+            _Registry.SetValue("Interval", IP_Check_Interval);
+            _Registry.SetValue("LastIpAddress", LastIPAddress);
+			_Registry.SetValue("Zones", DDNS_Zones);
         }
-		
-	}
+        #endregion
+
+    }
 }
