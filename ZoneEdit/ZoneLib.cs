@@ -9,6 +9,9 @@ using Microsoft.Win32;
 using System.Resources;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace ZoneEdit
 {
@@ -58,39 +61,52 @@ namespace ZoneEdit
                 WriteToLog("error in sub [UpdateDNS]: " + ex.Message.ToString(), EventLogEntryType.Error);
             }
 		}
-        public static void UpdateDNS(string url, string zone, string IPAddress, Config cfg)
+        public static bool UpdateDNS(string url, string zone, string IPAddress, Config cfg)
         {
+            bool updated = false;
             try
             {
                 var zones = zone.Split(',');
-                foreach (var trackedZone in zones)
+
+                //pull values from configuration file
+                string ddnsUrl = string.Concat(url, "?host=", zone.Trim());//, string.Format("&dnsto={0}", IPAddress));
+                string ddnsUserName = cfg.DDNS_UserName;
+                string ddnsPassword = cfg.DDNS_Password;
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ddnsUrl);
+                request.Credentials = new NetworkCredential(ddnsUserName, ddnsPassword);
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string responseMsg = Convert(response.GetResponseStream()).Replace("\n","");
+
+                var results = ZoneEditResponse.GetResponse(responseMsg);
+
+                if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == (HttpStatusCode)201)
                 {
-
-                    //pull values from configuration file
-                    string ddnsUrl = string.Concat(url, "?host=", trackedZone.Trim());//, string.Format("&dnsto={0}", IPAddress));
-                    string ddnsUserName = cfg.DDNS_UserName;
-                    string ddnsPassword = cfg.DDNS_Password;
-
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ddnsUrl);
-                    request.Credentials = new NetworkCredential(ddnsUserName, ddnsPassword);
-
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    string responseMsg = Convert(response.GetResponseStream());
-                    if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == (HttpStatusCode)201)
+                    if (results.Success)
                     {
-                        WriteToLog($"DNS provider successfully updated {trackedZone.Trim()}", EventLogEntryType.Information);
+                        WriteToLog($"DNS provider successfully updated {zone.Trim()}", EventLogEntryType.Information);
+                        updated = true;
                     }
                     else
                     {
 
-                        WriteToLog($"Failed to update {trackedZone.Trim()} at www.zoneedit.com. Recieved return code {response.StatusCode} and message \"{responseMsg}\"", EventLogEntryType.Information);
+                        WriteToLog($"Failed to update {zone.Trim()} at www.zoneedit.com. Recieved return code {response.StatusCode} and message \"{results.Message}\"", EventLogEntryType.Error);
+                        updated = false;
                     }
+                 
+                }
+                else
+                {
+                    updated = false;
+                    WriteToLog($"Failed to update {zone.Trim()} at www.zoneedit.com. Recieved return code {response.StatusCode} and message \"{responseMsg}\"", EventLogEntryType.Information);
                 }
             }
             catch (Exception ex)
             {
                 WriteToLog("error in sub [UpdateDNS]: " + ex.Message.ToString(), EventLogEntryType.Error);
             }
+            return updated;
         }
         public static void RegisterCPL(string folderName)
         {
