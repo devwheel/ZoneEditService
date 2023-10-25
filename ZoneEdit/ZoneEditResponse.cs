@@ -12,12 +12,24 @@ using Newtonsoft.Json;
 
 namespace ZoneEdit
 {
+    /*ZoneEdit seems to return odd payloads for success and errors
+     * We need to convert that to something usable
+     * 
+    <SUCCESS CODE = "201" TEXT="no update required for foo.com to 10.10.175.5" ZONE="foo.com">
+    <SUCCESS CODE = "200" TEXT="foo.com updated to 10.10.175.5" ZONE="foo.com">
+
+    <ERROR CODE = "702" PARAM="600" TEXT="Minimum 600 seconds between requests" ZONE="foo.com"/>
+    */
+
+    #region ZoneEditResponses Class
     public class ZoneEditResponses : List<ZoneEditResponse>
     {
         public bool Success { get; set; } = false;
         public string Message { get; set; } = string.Empty;
     }
+    #endregion
 
+    #region ZoneEditResponse Class
     public class ZoneEditResponse
     {
         [XmlAttribute("CODE")]
@@ -75,5 +87,5 @@ namespace ZoneEdit
         }
 
     }
-
+    #endregion
 }
